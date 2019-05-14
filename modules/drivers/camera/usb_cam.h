@@ -41,8 +41,10 @@
 #include <sys/ioctl.h>
 #include <sys/mman.h>
 
+#ifdef __x86_64__
 #include <immintrin.h>
 #include <x86intrin.h>
+#endif
 
 extern "C" {
 #include <libavcodec/avcodec.h>

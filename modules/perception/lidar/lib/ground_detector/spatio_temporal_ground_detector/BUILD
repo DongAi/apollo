@@ -10,7 +10,13 @@ cc_library(
     hdrs = [
         "spatio_temporal_ground_detector.h",
     ],
-    copts = ["-msse4.1"],
+    copts = [
+    ] + select ({
+        "//tools/platforms:x86_64": [
+            "-msse4.1",
+        ],
+        "//tools/platforms:aarch64": [],
+    }),
     deps = [
         "//cyber",
         "//modules/perception/base",
@@ -37,7 +43,13 @@ cc_test(
     srcs = [
         "spatio_temporal_ground_detector_test.cc",
     ],
-    copts = ["-msse4.1"],
+    copts = [
+    ] + select ({
+        "//tools/platforms:x86_64": [
+            "-msse4.1",
+        ],
+        "//tools/platforms:aarch64": [],
+    }),
     deps = [
         ":spatio_temporal_ground_detector",
         "@gtest//:main",

@@ -8,14 +8,20 @@ cc_library(
         "hermes_can_client.cc",
     ],
     hdrs = [
+        "hermes_can_client.h",
         "bcan.h",
         "bcan_defs.h",
-        "hermes_can_client.h",
     ],
     deps = [
         "//modules/drivers/canbus/can_client",
-        "//third_party/can_card_library/hermes_can",
-    ],
+    ] + select ({
+        "//tools/platforms:x86_64": [
+            "//third_party/can_card_library/hermes_can:hermes_can",
+        ],
+        "//tools/platforms:aarch64": [
+            "//third_party/can_card_library/hermes_can:hermes_can_aarch64",
+        ],
+    }),
 )
 
 cc_test(

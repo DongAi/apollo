@@ -16,7 +16,7 @@
 
 #pragma once
 
-#include <QOpenGLWidget>
+#include <QGLWidget>
 
 #include "modules/tools/visualizer/free_camera.h"
 #include "modules/tools/visualizer/plane.h"
@@ -25,7 +25,7 @@
 class QTimer;
 class SceneCameraDialog;
 
-class SceneViewer : public QOpenGLWidget, protected QOpenGLFunctions {
+class SceneViewer : public QGLWidget, protected QGLFunctions {
   Q_OBJECT
 
  public:

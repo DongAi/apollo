@@ -46,7 +46,13 @@
   template <typename T>                                          \
   constexpr bool name<T>::value;
 
+#if defined(__x86_64__)
 inline void cpu_relax() { asm volatile("rep; nop" ::: "memory"); }
+#elif defined(__aarch64__)
+inline void cpu_relax() { asm volatile("yield" ::: "memory"); }
+#else
+#error "Undefined CPU Architecture."
+#endif
 
 inline void* CheckedMalloc(size_t size) {
   void* ptr = std::malloc(size);

@@ -37,7 +37,9 @@
 #include <cmath>
 #include <string>
 
+#ifdef __x86_64__
 #include "adv_plat/include/adv_trigger.h"
+#endif
 #include "modules/drivers/camera/usb_cam.h"
 #include "modules/drivers/camera/util.h"
 
@@ -399,6 +401,7 @@ bool UsbCam::set_adv_trigger() {
   AINFO << "Trigger enable, dev:" << config_->camera_dev()
         << ", fps:" << config_->trigger_fps()
         << ", internal:" << config_->trigger_internal();
+#ifdef __x86_64
   int ret = adv_trigger_enable(
       config_->camera_dev().c_str(),
       static_cast<unsigned char>(config_->trigger_fps()),
@@ -407,6 +410,7 @@ bool UsbCam::set_adv_trigger() {
     AERROR << "trigger failed:" << ret;
     return false;
   }
+#endif
   return true;
 }
 
@@ -900,8 +904,10 @@ bool UsbCam::process_image(const void* src, int len, CameraImagePtr dest) {
     if (config_->output_type() == YUYV) {
       memcpy(dest->image, src, dest->width * dest->height * 2);
     } else if (config_->output_type() == RGB) {
+#ifdef __x86_64__
       yuyv2rgb_avx((unsigned char*)src, (unsigned char*)dest->image,
                    dest->width * dest->height);
+#endif
     } else {
       AERROR << "unsupported output format:" << config_->output_type();
       return false;

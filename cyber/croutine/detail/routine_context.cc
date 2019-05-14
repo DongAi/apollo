@@ -38,12 +38,23 @@ namespace croutine {
 // ctx->sp  =>  |        RBP       |
 //              +------------------+
 void MakeContext(const func &f1, const void *arg, RoutineContext *ctx) {
+#if defined(__x86_64__)
   ctx->sp = ctx->stack + STACK_SIZE - 2 * sizeof(void *) - REGISTERS_SIZE;
   std::memset(ctx->sp, 0, REGISTERS_SIZE);
   char *sp = ctx->stack + STACK_SIZE - 2 * sizeof(void *);
   *reinterpret_cast<void **>(sp) = reinterpret_cast<void *>(f1);
   sp -= sizeof(void *);
   *reinterpret_cast<void **>(sp) = const_cast<void *>(arg);
+#elif defined(__aarch64__)
+  ctx->sp = ctx->stack + STACK_SIZE - 2 * sizeof(void *) - REGISTERS_SIZE;
+  std::memset(ctx->sp, 0, REGISTERS_SIZE);
+  char *sp = ctx->stack + STACK_SIZE - 3 * sizeof(void *);
+  *reinterpret_cast<void **>(sp) = const_cast<void *>(arg);
+  sp -= sizeof(void *);
+  *reinterpret_cast<void **>(sp) = reinterpret_cast<void *>(f1);
+#else
+#error "Undefined CPU Architecture."
+#endif
 }
 
 }  // namespace croutine

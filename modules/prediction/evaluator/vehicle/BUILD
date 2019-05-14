@@ -150,6 +150,12 @@ cc_library(
     hdrs = [
         "cruise_mlp_evaluator.h",
     ],
+    copts = [
+        "-fopenmp",
+    ],
+    linkopts = [
+        "-lgomp",
+    ],
     deps = [
         "//modules/prediction/common:prediction_util",
         "//modules/prediction/container:container_manager",

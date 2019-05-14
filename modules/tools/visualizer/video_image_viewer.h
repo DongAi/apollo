@@ -16,7 +16,8 @@
 
 #pragma once
 
-#include <QOpenGLWidget>
+#include <QGLWidget>
+#include <QGLFunctions>
 
 #include "modules/tools/visualizer/free_camera.h"
 #include "modules/tools/visualizer/plane.h"
@@ -24,7 +25,7 @@
 class Texture;
 class FixedAspectRatioWidget;
 
-class VideoImgViewer : public QOpenGLWidget, protected QOpenGLFunctions {
+class VideoImgViewer : public QGLWidget, protected QGLFunctions {
  public:
   explicit VideoImgViewer(QWidget* parent = nullptr);
   ~VideoImgViewer();

@@ -21,7 +21,7 @@ LOCAL_IMAGE="no"
 VERSION=""
 ARCH=$(uname -m)
 VERSION_X86_64="dev-x86_64-20190411_1700"
-VERSION_AARCH64="dev-aarch64-20170927_1111"
+VERSION_AARCH64="dev-aarch64-20190514_1632"
 VERSION_OPT=""
 
 # Check whether user has agreed license agreement
@@ -122,11 +122,11 @@ check_host_environment
 VOLUME_VERSION="latest"
 DEFAULT_MAPS=(
   sunnyvale_big_loop
-  sunnyvale_hdl128
+#  sunnyvale_hdl128
   sunnyvale_loop
-  sunnyvale_with_two_offices
-  san_mateo
-  san_mateo_hdl64
+#  sunnyvale_with_two_offices
+#  san_mateo
+#  san_mateo_hdl64
 )
 MAP_VOLUME_CONF=""
 
@@ -231,7 +231,7 @@ function main(){
         info "Start docker container based on local image : $IMG"
     else
         info "Start pulling docker image $IMG ..."
-        docker pull $IMG
+#        docker pull $IMG
         if [ $? -ne 0 ];then
             error "Failed to pull docker image."
             exit 1
@@ -275,14 +275,14 @@ function main(){
     docker stop ${LOCALIZATION_VOLUME} > /dev/null 2>&1
 
     LOCALIZATION_VOLUME_IMAGE=${DOCKER_REPO}:localization_volume-${ARCH}-latest
-    docker pull ${LOCALIZATION_VOLUME_IMAGE}
+#    docker pull ${LOCALIZATION_VOLUME_IMAGE}
     docker run -it -d --rm --name ${LOCALIZATION_VOLUME} ${LOCALIZATION_VOLUME_IMAGE}
 
     YOLO3D_VOLUME=apollo_yolo3d_volume_$USER
     docker stop ${YOLO3D_VOLUME} > /dev/null 2>&1
 
     YOLO3D_VOLUME_IMAGE=${DOCKER_REPO}:yolo3d_volume-${ARCH}-latest
-    docker pull ${YOLO3D_VOLUME_IMAGE}
+#    docker pull ${YOLO3D_VOLUME_IMAGE}
     docker run -it -d --rm --name ${YOLO3D_VOLUME} ${YOLO3D_VOLUME_IMAGE}
 
     info "Starting docker container \"${APOLLO_DEV}\" ..."
@@ -292,6 +292,18 @@ function main(){
     if ! [ -x "$(command -v ${DOCKER_CMD})" ]; then
         DOCKER_CMD="docker"
         USE_GPU=0
+    fi
+
+    EXTRA_VOLUMES=""
+    if [ "$ARCH" == 'aarch64' ]; then
+        EXTRA_VOLUMES="
+        -v /usr/lib/aarch64-linux-gnu/tegra:/usr/lib/aarch64-linux-gnu/tegra    \
+        -v /usr/lib/aarch64-linux-gnu/gstreamer-1.0:/usr/lib/aarch64-linux-gnu/gstreamer-1.0    \
+        -v /usr/lib/aarch64-linux-gnu/tegra-egl:/usr/lib/aarch64-linux-gnu/tegra-egl    \
+        -v /usr/lib/aarch64-linux-gnu/mesa-egl:/usr/lib/aarch64-linux-gnu/mesa-egl    \
+        -v /run:/run    \
+        -v /lib/firmware/tegra18x:/lib/firmware/tegra18x
+        "
     fi
 
     ${DOCKER_CMD} run -it \
@@ -309,6 +321,7 @@ function main(){
         -e DOCKER_GRP_ID=$GRP_ID \
         -e DOCKER_IMG=$IMG \
         -e USE_GPU=$USE_GPU \
+        ${EXTRA_VOLUMES} \
         $(local_volumes) \
         --net host \
         -w /apollo \

@@ -12,12 +12,21 @@ cc_library(
         "obu_interface_grpc_impl.h",
     ],
     linkopts = [
-        "-lgrpc++",
-    ],
+    ] + select({
+        "//tools/platforms:x86_64": [
+            "-lgrpc++",
+        ],
+        "//conditions:default": [],
+    }),
     deps = [
         "//modules/v2x/v2x_proxy/obu_interface/grpc_interface:grpc_client",
         "//modules/v2x/v2x_proxy/obu_interface/grpc_interface:grpc_server",
-    ],
+    ] + select({
+        "//tools/platforms:aarch64": [
+            "@grpc_aarch64",
+        ],
+        "//conditions:default": [],
+    }),
 )
 
 cc_test(

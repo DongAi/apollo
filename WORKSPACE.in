@@ -246,6 +246,13 @@ load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
 
 grpc_deps()
 
+# grpc_aarch64
+new_local_repository(
+    name = "grpc_aarch64",
+    build_file = "third_party/grpc_aarch64.BUILD",
+    path = "/usr",
+)
+
 # python
 new_local_repository(
     name = "python27",
@@ -257,12 +264,12 @@ new_local_repository(
 new_local_repository(
     name = "pytorch",
     build_file = "third_party/pytorch.BUILD",
-    path = "/usr/local/apollo/libtorch",
+    path = "/usr/local/libtorch",
 )
 
 # PyTorch GPU
 new_local_repository(
     name = "pytorch_gpu",
     build_file = "third_party/pytorch_gpu.BUILD",
-    path = "/usr/local/apollo/libtorch_gpu",
+    path = "/usr/local/libtorch_gpu",
 )

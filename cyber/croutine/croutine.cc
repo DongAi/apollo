@@ -31,8 +31,8 @@ namespace croutine {
 using apollo::cyber::event::PerfEventCache;
 using apollo::cyber::event::SchedPerf;
 
-thread_local CRoutine *CRoutine::current_routine_ = nullptr;
-thread_local char *CRoutine::main_stack_ = nullptr;
+thread_local volatile CRoutine *CRoutine::current_routine_ = nullptr;
+thread_local volatile char *CRoutine::main_stack_ = nullptr;
 
 namespace {
 std::shared_ptr<base::CCObjectPool<RoutineContext>> context_pool = nullptr;
@@ -43,7 +43,7 @@ void CRoutineEntry(void *arg) {
   r->Run();
   CRoutine::Yield(RoutineState::FINISHED);
 }
-}  // namespace
+}
 
 CRoutine::CRoutine(const std::function<void()> &func) : func_(func) {
   std::call_once(pool_init_flag, [&]() {

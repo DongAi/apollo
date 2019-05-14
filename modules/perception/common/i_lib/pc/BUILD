@@ -10,7 +10,13 @@ cc_library(
     hdrs = [
         "i_ground.h",
     ],
-    copts = ["-msse4.1"],
+    copts = [
+    ] + select ({
+        "//tools/platforms:x86_64": [
+            "-msse4.1",
+        ],
+        "//conditions:default": [],
+    }),
     deps = [
         ":i_struct_s",
         ":i_util",

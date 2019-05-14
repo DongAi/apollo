@@ -32,7 +32,13 @@ namespace cyber {
 namespace croutine {
 
 constexpr size_t STACK_SIZE = 2 * 1024 * 1024;
+#if defined(__x86_64__)
 constexpr size_t REGISTERS_SIZE = 56;
+#elif defined(__aarch64__)
+constexpr size_t REGISTERS_SIZE = 176;    // 12 * 8 + 16 + 8 * 8
+#else
+#error "Undefined CPU Architecture."
+#endif
 
 typedef void (*func)(void*);
 struct RoutineContext {

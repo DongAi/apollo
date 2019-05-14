@@ -536,10 +536,17 @@ void CruiseMLPEvaluator::LoadModels() {
   //   device_ = torch::Device(torch::kCUDA);
   // }
   torch::set_num_threads(1);
+#ifndef __aarch64__
   torch_go_model_ptr_ =
       torch::jit::load(FLAGS_torch_vehicle_cruise_go_file, device_);
   torch_cutin_model_ptr_ =
       torch::jit::load(FLAGS_torch_vehicle_cruise_cutin_file, device_);
+#else
+  torch_go_model_ptr_ =
+      torch::jit::load(FLAGS_torch_vehicle_cruise_go_file);
+  torch_cutin_model_ptr_ =
+      torch::jit::load(FLAGS_torch_vehicle_cruise_cutin_file);
+#endif
 }
 
 void CruiseMLPEvaluator::ModelInference(

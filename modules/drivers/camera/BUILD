@@ -56,12 +56,22 @@ cc_library(
         "usb_cam.h",
         "util.h",
     ],
-    copts = ["-mavx2"],
+    copts = [
+    ] + select({
+        "//tools/platforms:x86_64": [
+            "-mavx2",
+        ],
+        "//conditions:default": [],
+    }),
     deps = [
         "//cyber",
         "//modules/drivers/camera/proto:camera_proto",
-        "@adv_plat",
-    ],
+    ] + select({
+        "//tools/platforms:x86_64": [
+            "@adv_plat//:adv_plat",
+        ],
+        "//conditions:default": [],
+    }) ,
 )
 
 cpplint()

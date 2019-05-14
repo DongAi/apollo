@@ -331,8 +331,13 @@ void LaneScanningEvaluator::LoadModel() {
   //   device_ = torch::Device(torch::kCUDA);
   // }
   torch::set_num_threads(1);
+#ifndef __aarch64__
   torch_lane_scanning_model_ptr_ =
       torch::jit::load(FLAGS_torch_vehicle_lane_scanning_file, device_);
+#else
+  torch_lane_scanning_model_ptr_ =
+      torch::jit::load(FLAGS_torch_vehicle_lane_scanning_file);
+#endif
 }
 
 void LaneScanningEvaluator::ModelInference(

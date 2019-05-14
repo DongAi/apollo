@@ -45,6 +45,10 @@ cc_library(
     hdrs = [
         "routine_factory.h",
     ],
+#    copts = [
+#        "-fno-schedule-insns2",
+#    ],
+#    linkopts = ["-fno-schedule-insns2"],
     deps = [
         "//cyber/common",
         "//cyber/event:perf_event_cache",

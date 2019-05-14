@@ -31,20 +31,26 @@
 #include <sys/types.h>
 #include <unistd.h>
 
+#ifdef __x86_64__
 #include <immintrin.h>
 #include <x86intrin.h>
+#endif
 
 namespace apollo {
 namespace drivers {
 namespace camera {
 
+#ifdef __x86_64__
 void yuyv2rgb_avx(unsigned char *YUV, unsigned char *RGB, int NumPixels);
+#endif
 
 #define SIMD_INLINE inline __attribute__((always_inline))
 
+#ifdef __x86_64__
 void print_m256(const __m256i a);
 void print_m256_i32(const __m256i a);
 void print_m256_i16(const __m256i a);
+#endif
 
 template <class T>
 SIMD_INLINE char GetChar(T value, size_t index) {
@@ -157,6 +163,7 @@ SIMD_INLINE char GetChar(T value, size_t index) {
         SIMD_LL_SET2_EPI32(a6, a7)                            \
   }
 
+#ifdef __x86_64__
 const size_t A = sizeof(__m256i);
 const size_t DA = 2 * A;
 const size_t QA = 4 * A;
@@ -302,6 +309,8 @@ const __m256i K8_SHUFFLE_BGR2_TO_RED = SIMD_MM256_SETR_EPI8(
 
 const __m256i K16_Y_ADJUST = SIMD_MM256_SET1_EPI16(0);
 const __m256i K16_UV_ADJUST = SIMD_MM256_SET1_EPI16(128);
+#endif
+
 const int Y_ADJUST = 0;
 const int UV_ADJUST = 128;
 const int YUV_TO_BGR_AVERAGING_SHIFT = 13;
@@ -317,6 +326,7 @@ const int V_TO_GREEN_WEIGHT =
 const int V_TO_RED_WEIGHT =
     static_cast<int>((1.4065 * (1 << YUV_TO_BGR_AVERAGING_SHIFT)));
 
+#ifdef __x86_64__
 const __m256i K16_YRGB_RT =
     SIMD_MM256_SET2_EPI16(Y_TO_RGB_WEIGHT, YUV_TO_BGR_ROUND_TERM);
 const __m256i K16_VR_0 = SIMD_MM256_SET2_EPI16(V_TO_RED_WEIGHT, 0);
@@ -521,6 +531,7 @@ template <bool align>
 SIMD_INLINE __m256i LoadPermuted(const __m256i *p) {
   return _mm256_permute4x64_epi64(Load<align>(p), 0xD8);
 }
+#endif
 
 }  // namespace camera
 }  // namespace drivers

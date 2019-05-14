@@ -48,7 +48,7 @@ class RoutineFactory {
 };
 
 template <typename M0, typename F>
-RoutineFactory CreateRoutineFactory(
+__attribute__((optimize("O0"))) RoutineFactory CreateRoutineFactory(
     F&& f, const std::shared_ptr<data::DataVisitor<M0>>& dv) {
   RoutineFactory factory;
   factory.SetDataVisitor(dv);
@@ -70,7 +70,7 @@ RoutineFactory CreateRoutineFactory(
 }
 
 template <typename M0, typename M1, typename F>
-RoutineFactory CreateRoutineFactory(
+__attribute__((optimize("O0"))) RoutineFactory CreateRoutineFactory(
     F&& f, const std::shared_ptr<data::DataVisitor<M0, M1>>& dv) {
   RoutineFactory factory;
   factory.SetDataVisitor(dv);
@@ -93,7 +93,7 @@ RoutineFactory CreateRoutineFactory(
 }
 
 template <typename M0, typename M1, typename M2, typename F>
-RoutineFactory CreateRoutineFactory(
+__attribute__((optimize("O0"))) RoutineFactory CreateRoutineFactory(
     F&& f, const std::shared_ptr<data::DataVisitor<M0, M1, M2>>& dv) {
   RoutineFactory factory;
   factory.SetDataVisitor(dv);
@@ -117,7 +117,7 @@ RoutineFactory CreateRoutineFactory(
 }
 
 template <typename M0, typename M1, typename M2, typename M3, typename F>
-RoutineFactory CreateRoutineFactory(
+__attribute__((optimize("O0"))) RoutineFactory CreateRoutineFactory(
     F&& f, const std::shared_ptr<data::DataVisitor<M0, M1, M2, M3>>& dv) {
   RoutineFactory factory;
   factory.SetDataVisitor(dv);

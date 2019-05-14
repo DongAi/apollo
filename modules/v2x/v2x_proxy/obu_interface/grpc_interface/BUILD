@@ -11,13 +11,22 @@ cc_library(
         "grpc_client.h",
     ],
     linkopts = [
-        "-lgrpc++",
-    ],
+    ] + select({
+        "//tools/platforms:x86_64": [
+            "-lgrpc++",
+        ],
+        "//conditions:default": [],
+    }),
     deps = [
         "//cyber",
         "//modules/v2x/common:v2x_proxy_gflags",
         "//modules/v2x/proto:v2x_service_car_to_obu_grpc",
-    ],
+    ] + select({
+        "//tools/platforms:aarch64": [
+            "@grpc_aarch64",
+        ],
+        "//conditions:default": [],
+    }),
 )
 
 cc_library(
@@ -29,12 +38,21 @@ cc_library(
         "grpc_server.h",
     ],
     linkopts = [
-        "-lgrpc++",
-    ],
+    ] + select({
+        "//tools/platforms:x86_64": [
+            "-lgrpc++",
+        ],
+        "//conditions:default": [],
+    }),
     deps = [
         "//cyber",
         "//modules/v2x/proto:v2x_service_obu_to_car_grpc",
-    ],
+    ] + select({
+        "//tools/platforms:aarch64": [
+            "@grpc_aarch64",
+        ],
+        "//conditions:default": [],
+    }),
 )
 
 cc_test(

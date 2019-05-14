@@ -88,11 +88,13 @@ class CRoutine {
 
   std::chrono::steady_clock::time_point wake_time() const;
 
-  void set_group_name(const std::string &group_name) {
+  void set_group_name(const std::string& group_name) {
     group_name_ = group_name;
   }
 
-  const std::string &group_name() { return group_name_; }
+  const std::string& group_name() {
+    return group_name_;
+  }
 
  private:
   CRoutine(CRoutine &) = delete;
@@ -118,8 +120,8 @@ class CRoutine {
 
   std::string group_name_;
 
-  static thread_local CRoutine *current_routine_;
-  static thread_local char *main_stack_;
+  static thread_local volatile CRoutine *current_routine_;
+  static thread_local volatile char *main_stack_;
 };
 
 inline void CRoutine::Yield(const RoutineState &state) {
@@ -132,9 +134,11 @@ inline void CRoutine::Yield() {
   SwapContext(GetCurrentRoutine()->GetStack(), GetMainStack());
 }
 
-inline CRoutine *CRoutine::GetCurrentRoutine() { return current_routine_; }
+inline CRoutine *CRoutine::GetCurrentRoutine() { return const_cast<CRoutine *>(
+                                                            current_routine_); }
 
-inline char **CRoutine::GetMainStack() { return &main_stack_; }
+inline char **CRoutine::GetMainStack() { return const_cast<char **>(
+                                                            &main_stack_); }
 
 inline RoutineContext *CRoutine::GetContext() { return context_.get(); }
 

@@ -17,6 +17,7 @@ cuda_arch = " ".join([
     "-gencode=arch=compute_60,code=sm_60",
     "-gencode=arch=compute_61,code=sm_61",
     "-gencode=arch=compute_61,code=compute_61",
+    "-gencode=arch=compute_62,code=compute_62",
 ])
 
 def cuda_library_impl(ctx):

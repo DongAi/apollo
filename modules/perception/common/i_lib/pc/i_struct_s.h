@@ -710,7 +710,6 @@ bool VoxelGridXY<T>::Set(const T *data, unsigned int nr_points,
   initialized_ = true;
   return (initialized_);
 }
-
 template <typename T>
 bool VoxelGridXY<T>::SetS(const float *data, unsigned int nr_points,
                           unsigned int nr_point_element) {
@@ -720,6 +719,7 @@ bool VoxelGridXY<T>::SetS(const float *data, unsigned int nr_points,
     return initialized_;
   }
 
+/*
   data_ = data;
   nr_points_ = nr_points;
   nr_point_element_ = nr_point_element;
@@ -847,10 +847,10 @@ bool VoxelGridXY<T>::SetS(const float *data, unsigned int nr_points,
     cptr_remainder += nr_point_element;
   }
 
+*/
   initialized_ = true;
   return (initialized_);
 }
-
 template <typename T>
 bool VoxelGridXY<T>::Set(const T *data, unsigned int nr_points,
                          unsigned int nr_point_element, unsigned int nr_voxel_x,
