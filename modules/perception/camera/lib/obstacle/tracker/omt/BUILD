@@ -27,7 +27,6 @@ cc_library(
     deps = [
         ":frame_list",
         "//modules/perception/base",
-        "//modules/perception/inference/utils:inference_cuda_util_lib",
         "//modules/perception/inference/utils:inference_util_lib",
     ],
 )
@@ -46,7 +45,7 @@ cc_library(
         ":track_object",
         "//modules/perception/base",
         "//modules/perception/camera/common",
-        "//modules/perception/camera/lib/obstacle/tracker/common",
+        "//modules/perception/camera/lib/obstacle/detector/yolo:common",
     ],
 )
 
@@ -59,7 +58,6 @@ cc_library(
         "//cyber",
         "//modules/perception/camera/common",
         "//modules/perception/camera/lib/interface",
-        "//modules/perception/inference/utils:inference_cuda_util_lib",
         "//modules/perception/inference/utils:inference_util_lib",
     ],
 )
@@ -80,7 +78,7 @@ cc_library(
         "//cyber/common:file",
         "//modules/perception/camera/common",
         "//modules/perception/camera/lib/interface",
-        "//modules/perception/camera/lib/obstacle/tracker/common",
+        "//modules/perception/camera/lib/obstacle/detector/yolo:common",
     ],
 )
 

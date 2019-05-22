@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *****************************************************************************/
-#include "modules/perception/camera/lib/obstacle/tracker/common/kalman_filter.h"
+#include "modules/perception/camera/lib/obstacle/detector/yolo/kalman_filter.h"
 
 #include <algorithm>
 

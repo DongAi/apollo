@@ -1,0 +1,56 @@
+load("//tools:cpplint.bzl", "cpplint")
+load("//tools:cuda_library.bzl", "cuda_library")
+
+package(default_visibility = ["//visibility:public"])
+
+cuda_library(
+    name = "obstacle_cuda",
+    srcs = [
+        "tracker/common/similar.cu",
+        "detector/yolo/region_output.cu",
+    ],
+    hdrs = [
+        "tracker/common/similar.h",
+        "detector/yolo/region_output.h",
+    ],
+    deps = [
+        "//cyber",
+        "//modules/perception/base",
+        "//modules/perception/camera/common",
+        "//modules/perception/camera/common:camera_frame",
+        "//modules/perception/inference/utils:inference_util_lib",
+        "//modules/perception/camera/lib/obstacle/detector/yolo/proto:yolo_proto",
+        "@cuda",
+    ],
+)
+
+cc_library(
+    name = "obstacle_cuda_lib",
+    srcs = [
+        "tracker/common/similar.cc",
+        "detector/yolo/region_output.cc",
+        ":obstacle_cuda",
+    ],
+    hdrs = [
+        "tracker/common/similar.h",
+        "detector/yolo/region_output.h",
+    ],
+    deps = [
+        "//modules/perception/base",
+        "//modules/perception/camera/common",
+        "//modules/perception/camera/lib/obstacle/detector/yolo/proto:yolo_proto",
+        "@eigen",
+    ],
+)
+
+cc_library(
+    name = "object_maintainer",
+    hdrs = [
+        "detector/yolo/object_maintainer.h",
+    ],
+    deps = [
+        "//modules/perception/base",
+    ],
+)
+
+cpplint()

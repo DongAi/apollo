@@ -9,6 +9,7 @@ cc_library(
         "/usr/include",
     ],
     linkopts = [
+        "-L/usr/lib/aarch64-linux-gnu/",
         "-lboost_system",
         "-lboost_thread",
         "-lboost_filesystem",

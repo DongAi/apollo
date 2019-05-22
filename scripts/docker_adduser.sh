@@ -35,6 +35,9 @@ if [ -e "/apollo/scripts/apollo_base.sh" ]; then
 fi
 ulimit -c unlimited" >> /home/${DOCKER_USER}/.bashrc
   source /home/${DOCKER_USER}/.bashrc
+
+#redirect libtorch on aarch64
+sudo ln -s /usr/local/libtorch /usr/local/apollo/libtorch
 else
   echo '
   export PATH=${PATH}:/apollo/scripts:/usr/local/miniconda2/bin
@@ -72,7 +75,6 @@ fi
 if [ -e /dev/camera/trafficlights ]; then
   chmod a+rw /dev/camera/trafficlights
 fi
-
 
 if [ "$RELEASE_DOCKER" != "1" ];then
   # setup ros package

@@ -8,9 +8,7 @@ licenses(["notice"])
 cc_library(
     name = "perception_inference_tensorrt_plugins",
     srcs = [
-        ":perception_inference_tensorrt_plugins_argmax_cuda",
-        ":perception_inference_tensorrt_plugins_slice_cuda",
-        ":perception_inference_tensorrt_plugins_softmax_cuda",
+        ":perception_inference_tensorrt_plugins_cuda",
     ],
     hdrs = glob([
         "*.h",
@@ -19,12 +17,16 @@ cc_library(
 )
 
 cuda_library(
-    name = "perception_inference_tensorrt_plugins_slice_cuda",
+    name = "perception_inference_tensorrt_plugins_cuda",
     srcs = [
         "slice_plugin.cu",
+        "softmax_plugin.cu",
+        "argmax_plugin.cu",
     ],
     hdrs = [
         "slice_plugin.h",
+        "softmax_plugin.h",
+        "argmax_plugin.h",
     ],
     deps = [
         "//modules/perception/inference/tensorrt:rt_common",

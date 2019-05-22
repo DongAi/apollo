@@ -12,6 +12,7 @@ cc_binary(
         "//modules/perception/inference/tensorrt:entropy_calibrator",
         "//modules/perception/inference/tensorrt:rt_net",
         "//modules/perception/inference/utils:inference_util_lib",
+        "@caffe",
     ],
 )
 
@@ -25,6 +26,7 @@ cc_binary(
         "//modules/perception/inference/tensorrt:entropy_calibrator",
         "//modules/perception/inference/tensorrt:rt_net",
         "//modules/perception/inference/utils:inference_util_lib",
+        "@caffe",
     ],
 )
 
@@ -38,6 +40,7 @@ cc_binary(
         "//modules/perception/inference/tensorrt:entropy_calibrator",
         "//modules/perception/inference/tensorrt:rt_net",
         "//modules/perception/inference/utils:inference_util_lib",
+        "@caffe",
     ],
 )
 
@@ -51,6 +54,7 @@ cc_binary(
         "//modules/perception/inference/tensorrt:entropy_calibrator",
         "//modules/perception/inference/tensorrt:rt_net",
         "//modules/perception/inference/utils:inference_util_lib",
+        "@caffe",
     ],
 )
 

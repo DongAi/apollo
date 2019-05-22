@@ -31,7 +31,6 @@ cc_library(
         "//modules/perception/camera/lib/interface",
         "//modules/perception/inference:inference_factory_lib",
         "//modules/perception/inference:inference_lib",
-        "//modules/perception/inference/utils:inference_resize_lib",
         "//modules/perception/inference/utils:inference_util_lib",
     ],
 )
@@ -50,7 +49,6 @@ cc_library(
         "//modules/perception/camera/common",
         "//modules/perception/camera/lib/interface",
         "//modules/perception/inference:inference_factory_lib",
-        "//modules/perception/inference/utils:inference_gemm_lib",
         "//modules/perception/inference/utils:inference_util_lib",
     ],
 )
@@ -70,8 +68,7 @@ cc_library(
         "//modules/perception/camera/common",
         "//modules/perception/camera/lib/interface",
         "//modules/perception/inference:inference_factory_lib",
-        "//modules/perception/inference/operators:perception_inference_operators",
-        "//modules/perception/inference/utils:inference_gemm_lib",
+#        "//modules/perception/inference/operators:perception_inference_operators",
         "//modules/perception/inference/utils:inference_util_lib",
     ],
 )

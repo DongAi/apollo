@@ -25,7 +25,7 @@
 namespace apollo {
 namespace perception {
 namespace inference {
-__global__ void resize_linear_kernel(const unsigned char *src,
+__global__ void resize_linear_kernel_local(const unsigned char *src,
                      float *dst,
                      int channel,
                      int height,
@@ -77,14 +77,13 @@ __global__ void resize_linear_kernel(const unsigned char *src,
     }
   }
 }
-int divup(int a, int b) {
+int divup_local(int a, int b) {
   if (a % b) {
     return a / b + 1;
   } else {
     return a / b;
   }
 }
-
 template<typename T>
 __global__ void resize_linear_kernel_mean(const unsigned char *src,
                                           float *dst,
@@ -177,9 +176,9 @@ bool ResizeGPU(const base::Image8U &src,
   float fy = static_cast<float>(origin_height) / static_cast<float>(height);
   const dim3 block(32, 8);
 
-  const dim3 grid(divup(width, block.x), divup(height, block.y));
+  const dim3 grid(divup_local(width, block.x), divup_local(height, block.y));
 
-  resize_linear_kernel << < grid, block >> >
+  resize_linear_kernel_local << < grid, block >> >
       (src.gpu_data(), dst->mutable_gpu_data(),
           origin_channel, origin_height, origin_width,
           stepwidth, height, width, fx, fy);
@@ -221,7 +220,7 @@ bool ResizeGPU(const apollo::perception::base::Blob<uint8_t> &src_gpu,
   float fx = static_cast<float>(origin_width) / static_cast<float>(width);
   float fy = static_cast<float>(origin_height) / static_cast<float>(height);
   const dim3 block(32, 8);
-  const dim3 grid(divup(width, block.x), divup(height, block.y));
+  const dim3 grid(divup_local(width, block.x), divup_local(height, block.y));
 
   resize_linear_kernel_mean << < grid, block >> >
       ((const unsigned char *) src_gpu.gpu_data(),
@@ -267,7 +266,7 @@ bool ResizeGPU(const base::Image8U &src,
   float fx = static_cast<float>(origin_width) / static_cast<float>(width);
   float fy = static_cast<float>(origin_height) / static_cast<float>(height);
   const dim3 block(32, 8);
-  const dim3 grid(divup(width, block.x), divup(height, block.y));
+  const dim3 grid(divup_local(width, block.x), divup_local(height, block.y));
 
   resize_linear_kernel_mean << < grid, block >> >
       (src.gpu_data(), dst->mutable_gpu_data() + dst->offset(start_axis),

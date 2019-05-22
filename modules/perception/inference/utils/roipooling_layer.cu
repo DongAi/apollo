@@ -60,7 +60,7 @@ license and copyright terms herein.
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *****************************************************************************/
-#include "modules/perception/inference/operators/roipooling_layer.h"
+#include "modules/perception/inference/utils/roipooling_layer.h"
 
 #include <algorithm>
 #include <vector>

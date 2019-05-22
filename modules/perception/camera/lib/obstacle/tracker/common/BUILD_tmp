@@ -3,37 +3,37 @@ load("//tools:cuda_library.bzl", "cuda_library")
 
 package(default_visibility = ["//visibility:public"])
 
-cuda_library(
-    name = "similar_cuda",
-    srcs = [
-        "similar.cu",
-    ],
-    hdrs = [
-        "similar.h",
-    ],
-    deps = [
-        "//cyber",
-        "//modules/perception/camera/common:camera_frame",
-        "//modules/perception/inference/utils:inference_gemm_lib",
-        "@cuda",
-    ],
-)
-
-cc_library(
-    name = "similar",
-    srcs = [
-        "similar.cc",
-        ":similar_cuda",
-    ],
-    hdrs = [
-        "similar.h",
-    ],
-    deps = [
-        "//modules/perception/base",
-        "//modules/perception/camera/common",
-        "@eigen",
-    ],
-)
+#cuda_library(
+#    name = "similar_cuda",
+#    srcs = [
+#        "similar.cu",
+#    ],
+#    hdrs = [
+#        "similar.h",
+#    ],
+#    deps = [
+#        "//cyber",
+#        "//modules/perception/camera/common:camera_frame",
+#        "//modules/perception/inference/utils:inference_util_lib",
+#        "@cuda",
+#    ],
+#)
+#
+#cc_library(
+#    name = "similar",
+#    srcs = [
+#        "similar.cc",
+#        ":similar_cuda",
+#    ],
+#    hdrs = [
+#        "similar.h",
+#    ],
+#    deps = [
+#        "//modules/perception/base",
+#        "//modules/perception/camera/common",
+#        "@eigen",
+#    ],
+#)
 
 cc_library(
     name = "half_circle_angle",
@@ -67,7 +67,7 @@ cc_library(
     deps = [
         ":half_circle_angle",
         ":kalman_filter",
-        ":similar",
+        "//modules/perception/camera/lib/obstacle:obstacle_cuda_lib",
     ],
 )
 

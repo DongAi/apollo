@@ -18,7 +18,6 @@ cc_library(
         "//modules/perception/camera/lib/lane/common:darkSCNN_proto",
         "//modules/perception/inference:inference_factory_lib",
         "//modules/perception/inference/caffe:caffe_net_lib",
-        "//modules/perception/inference/utils:inference_resize_lib",
         "//modules/perception/inference/utils:inference_util_lib",
         "//modules/perception/lib/registerer",
     ],

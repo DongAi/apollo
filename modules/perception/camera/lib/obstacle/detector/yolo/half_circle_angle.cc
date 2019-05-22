@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *****************************************************************************/
-#include "modules/perception/camera/lib/obstacle/tracker/common/half_circle_angle.h"
+#include "modules/perception/camera/lib/obstacle/detector/yolo/half_circle_angle.h"
 
 #include "modules/perception/camera/common/util.h"
 

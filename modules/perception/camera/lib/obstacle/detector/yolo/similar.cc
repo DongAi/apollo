@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *****************************************************************************/
-#include "modules/perception/camera/lib/obstacle/tracker/common/similar.h"
+#include "modules/perception/camera/lib/obstacle/detector/yolo/similar.h"
 #include "modules/perception/base/blob.h"
 
 namespace apollo {
