@@ -15,6 +15,7 @@ cc_library(
         "-lssl",
         "-lgrpc",
         "-lgpr",
+        "-laddress_sorting",
 #        "-lgrpc++_cronet",
 #        "-lgrpc++_error_details",
 #        "-lgrpc++_reflection",
