@@ -81,10 +81,15 @@ void ShmReceiver<M>::Disable() {
 
 template <typename M>
 void ShmReceiver<M>::Enable(const RoleAttributes& opposite_attr) {
+  if (this->enabled_) {
+    return;
+  }
+
   dispatcher_->AddListener<M>(
       this->attr_, opposite_attr,
       std::bind(&ShmReceiver<M>::OnNewMessage, this, std::placeholders::_1,
                 std::placeholders::_2));
+  this->enabled_ = true;
 }
 
 template <typename M>
