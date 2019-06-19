@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 ###############################################################################
-# Copyright 2018 The Apollo Authors. All Rights Reserved.
+# Copyright 2019 The Apollo Authors. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,16 +19,45 @@
 # Fail on first error.
 set -e
 
-cd "$(dirname "${BASH_SOURCE[0]}")"
-
-# First we need to upgrade libstdc++.so.6.0.19 to libstdc++.so.6.0.24 to be
-# compatible with the library.
-apt-get install -y --only-upgrade libstdc++
-
-wget http://182.61.33.235/download/apollo/apollo-docker/snowboy_aarch64.tar.gz
-tar xzf snowboy_aarch64.tar.gz
-mkdir -p /usr/local/apollo
-mv snowboy /usr/local/apollo/
-
-# Clean up.
-rm -fr snowboy_aarch64.tar.gz
+# Install common tools.
+apt-get update -y
+apt-get install -y \
+    apt-transport-https \
+    build-essential \
+    cmake \
+    curl \
+    software-properties-common \
+    wget \
+    unzip \
+    zip \
+    python \
+    sudo \
+    bc \
+    cppcheck \
+    debconf-utils \
+    doxygen \
+    graphviz \
+    gdb \
+    git \
+    subversion \
+    lcov \
+    libblas-dev \
+    libboost-all-dev \
+    libcurl4-openssl-dev \
+    libfreetype6-dev \
+    liblapack-dev \
+    libpcap-dev \
+    locate \
+    lsof \
+    realpath \
+    shellcheck \
+    vim \
+    v4l-utils \
+    nfs-common \
+    libatlas-base-dev \
+    libnuma-dev \
+    libncurses5 \
+    libncurses5-dev \
+    cmake \
+    gcc \
+    g++

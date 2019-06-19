@@ -35,7 +35,7 @@ apt-get update -y && apt-get install -y \
     mpi-default-dev
 
 #Install openblas via sourcecode
-wget http://www.baiduapollo.club/apollo-docker/openblas-0.2.18.tar.gz
+wget http://182.61.33.235/download/apollo/apollo-docker/openblas-0.2.18.tar.gz
 tar zxvf openblas-0.2.18.tar.gz
 mkdir /usr/include/openblas
 cp openblas-0.2.18/include/* /usr/include/openblas/
@@ -44,7 +44,7 @@ rm -rf openblas-0.2.18 openblas-0.2.18.tar.gz
 
 
 wget http://182.61.33.235/download/apollo/ApolloAuto/libs/caffe.zip
-#wget http://www.baiduapollo.club/download/apollo/ApolloAuto/libs/caffe.zip
+#wget http://182.61.33.235/download/apollo/ApolloAuto/libs/caffe.zip
 unzip caffe.zip
 mv caffe/include/caffe /usr/include/
 mv caffe/lib/* /usr/lib/aarch64-linux-gnu/

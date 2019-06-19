@@ -20,22 +20,27 @@
 set -e
 
 # Install cuda8
-wget http://www.baiduapollo.club/apollo-docker/cuda8_cudnn6/cuda-repo-l4t-8-0-local_8.0.84-1_arm64.deb
+wget http://182.61.33.235/download/apollo/apollo-docker/cuda8_cudnn6/cuda-repo-l4t-8-0-local_8.0.84-1_arm64.deb
 dpkg -i cuda-repo-l4t-8-0-local_8.0.84-1_arm64.deb
 
 # Install toolkit
 apt-get update -y
 apt-get -y install cuda-toolkit-8-0
 
-#Install cudnn7
-wget http://www.baiduapollo.club/apollo-docker/cuda8_cudnn6/libcudnn6_6.0.21-1+cuda8.0_arm64.deb
-dpkg -i libcudnn6_6.0.21-1+cuda8.0_arm64.deb
+#Install tensorrt
+wget http://182.61.33.235/download/apollo/docker/nv-tensorrt-repo-ubuntu1604-rc-cuda8.0-trt3.0-20170922_3.0.0-1_arm64.deb
+dpkg -i nv-tensorrt-repo-ubuntu1604-rc-cuda8.0-trt3.0-20170922_3.0.0-1_arm64.deb
 
-#Install cudnn7-dev
-wget http://www.baiduapollo.club/apollo-docker/cuda8_cudnn6/libcudnn6-dev_6.0.21-1+cuda8.0_arm64.deb
-dpkg -i libcudnn6-dev_6.0.21-1+cuda8.0_arm64.deb
+apt-get update -y
+apt-get install tensorrt -y
 
-wget http://www.baiduapollo.club/apollo-docker/nvblas.conf
+mkdir /usr/include/tensorrt
+mv /usr/include/aarch64-linux-gnu/Nv* /usr/include/tensorrt/
+
+# Install cudnn7
+apt-get -y install libcudnn7 libcudnn7-dev
+
+wget http://182.61.33.235/download/apollo/apollo-docker/nvblas.conf
 
 mv nvblas.conf /usr/local/cuda/
 
@@ -43,4 +48,4 @@ ln -s /usr/local/cuda/lib64/stubs/libnvidia-ml.so /usr/local/cuda/lib64/stubs/li
 
 
 # Clean up.
-rm -fr libcudnn6-dev_6.0.21-1+cuda8.0_arm64.deb libcudnn6_6.0.21-1+cuda8.0_arm64.deb cuda-repo-l4t-8-0-local_8.0.84-1_arm64.deb
+rm -fr nv-tensorrt-repo-ubuntu1604-rc-cuda8.0-trt3.0-20170922_3.0.0-1_arm64.deb cuda-repo-l4t-8-0-local_8.0.84-1_arm64.deb

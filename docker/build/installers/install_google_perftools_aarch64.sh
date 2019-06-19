@@ -26,7 +26,7 @@ apt-update -y && apt-get install -y \
 	libunwind8 \
 	libunwind8-dev
 
-wget http://www.baiduapollo.club/apollo-docker/google-perftools-2.1.90.tar.gz
+wget http://182.61.33.235/download/apollo/apollo-docker/google-perftools-2.1.90.tar.gz
 tar zxvf google-perftools-2.1.90.tar.gz
 cp -d google-perftools-2.1.90/lib/* /usr/local/lib/
 cp -r google-perftools-2.1.90/include/gperftools /usr/local/include
