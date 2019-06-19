@@ -60,4 +60,5 @@ apt-get install -y \
     libncurses5-dev \
     cmake \
     gcc \
-    g++
+    g++ \
+    libleveldb-dev

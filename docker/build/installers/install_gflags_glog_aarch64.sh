@@ -49,5 +49,5 @@ make install
 cd ../
 
 # Clean up.
-rm -fr /usr/local/lib/libglog.so*
+#rm -fr /usr/local/lib/libglog.so*
 rm -fr master.zip glog-master/  gflags-2.2.0 v2.2.0.tar.gz
