@@ -25,7 +25,7 @@ apt-get update -y && apt-get install -y \
 	libgtest-dev
 
 # Install gflags.
-wget http://www.baiduapollo.club/apollo-docker/v2.2.0.tar.gz
+wget http://182.61.33.235/download/apollo/apollo-docker/v2.2.0.tar.gz
 tar xzf v2.2.0.tar.gz
 mkdir gflags-2.2.0/build
 pushd gflags-2.2.0/build
@@ -49,5 +49,5 @@ make install
 cd ../
 
 # Clean up.
-rm -fr /usr/local/lib/libglog.so*
+#rm -fr /usr/local/lib/libglog.so*
 rm -fr master.zip glog-master/  gflags-2.2.0 v2.2.0.tar.gz

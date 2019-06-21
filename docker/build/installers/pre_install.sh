@@ -19,14 +19,46 @@
 # Fail on first error.
 set -e
 
-cd "$(dirname "${BASH_SOURCE[0]}")"
-
-wget http://182.61.33.235/download/apollo/ApolloAuto/libs/grpc.zip
-#wget http://182.61.33.235/download/apollo/ApolloAuto/libs/grpc.zip
-unzip grpc.zip
-
-sudo mv grpc/include/* /usr/local/include/
-sudo mv grpc/lib/* /usr/local/lib/
-
-# Clean up.
-rm -fr grpc.zip grpc
+# Install common tools.
+apt-get update -y
+apt-get install -y \
+    apt-transport-https \
+    build-essential \
+    cmake \
+    curl \
+    software-properties-common \
+    wget \
+    unzip \
+    zip \
+    python \
+    sudo \
+    bc \
+    cppcheck \
+    debconf-utils \
+    doxygen \
+    graphviz \
+    gdb \
+    git \
+    subversion \
+    lcov \
+    libblas-dev \
+    libboost-all-dev \
+    libcurl4-openssl-dev \
+    libfreetype6-dev \
+    liblapack-dev \
+    libpcap-dev \
+    locate \
+    lsof \
+    realpath \
+    shellcheck \
+    vim \
+    v4l-utils \
+    nfs-common \
+    libatlas-base-dev \
+    libnuma-dev \
+    libncurses5 \
+    libncurses5-dev \
+    cmake \
+    gcc \
+    g++ \
+    libleveldb-dev

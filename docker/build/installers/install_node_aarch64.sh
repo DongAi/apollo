@@ -21,7 +21,7 @@ set -e
 
 cd "$(dirname "${BASH_SOURCE[0]}")"
 
-wget http://www.baiduapollo.club/apollo-docker/n_v.2.1.0.zip
+wget http://182.61.33.235/download/apollo/apollo-docker/n_v.2.1.0.zip
 unzip n_v.2.1.0.zip
 pushd n-master
 make install

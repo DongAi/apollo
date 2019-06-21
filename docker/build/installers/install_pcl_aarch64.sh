@@ -21,7 +21,7 @@ set -e
 
 cd "$(dirname "${BASH_SOURCE[0]}")"
 
-wget http://www.baiduapollo.club/apollo-docker/pcl-1.7_aarch64.tar.gz
+wget http://182.61.33.235/download/apollo/apollo-docker/pcl-1.7_aarch64.tar.gz
 tar xzf pcl-1.7_aarch64.tar.gz
 mkdir -p /usr/local/include/pcl-1.7
 mv pcl-1.7_aarch64/include/pcl /usr/local/include/pcl-1.7/

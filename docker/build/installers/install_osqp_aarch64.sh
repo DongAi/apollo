@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 ###############################################################################
-# Copyright 2018 The Apollo Authors. All Rights Reserved.
+# Copyright 2019 The Apollo Authors. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -22,7 +22,7 @@ set -e
 cd "$(dirname "${BASH_SOURCE[0]}")"
 
 wget http://182.61.33.235/download/apollo/ApolloAuto/libs/osqp.zip
-#wget http://www.baiduapollo.club/download/apollo/ApolloAuto/libs/osqp.zip
+#wget http://182.61.33.235/download/apollo/ApolloAuto/libs/osqp.zip
 unzip osqp.zip
 
 sudo mv osqp/include/* /usr/local/include/
