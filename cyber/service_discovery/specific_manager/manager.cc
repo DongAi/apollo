@@ -4,7 +4,6 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
@@ -171,21 +170,7 @@ void Manager::Convert(const RoleAttributes& attr, RoleType role,
   msg->set_operate_type(opt);
   msg->set_role_type(role);
   auto role_attr = msg->mutable_role_attr();
-//  role_attr->CopyFrom(attr);
-  role_attr->set_host_name(attr.host_name());
-  role_attr->set_host_ip(attr.host_ip());
-  role_attr->set_process_id(attr.process_id());
-  role_attr->set_node_name(attr.node_name());
-  role_attr->set_node_id(attr.node_id());
-  role_attr->set_channel_name(attr.channel_name());
-  role_attr->set_channel_id(attr.channel_id());
-  role_attr->set_message_type(attr.message_type());
-//  role_attr->set_proto_desc(attr.proto_desc());
-  role_attr->set_id(attr.id());
-//  role_attr->mutable_socket_addr()->CopyFrom(attr.socket_addr());
-//  role_attr->mutable_qos_profile()->CopyFrom(attr.qos_profile());
-//  role_attr->set_service_name(attr.service_name());
-//  role_attr->set_service_id(attr.service_id());
+  role_attr->CopyFrom(attr);
   if (!role_attr->has_host_name()) {
     role_attr->set_host_name(host_name_);
   }
@@ -196,14 +181,28 @@ void Manager::Convert(const RoleAttributes& attr, RoleType role,
 
 void Manager::Notify(const ChangeMsg& msg) { signal_(msg); }
 
+#ifdef __aarch64__
+static const std::string mid_str = "##apollo_arm##";
+static char raw_c = '\000';
+#endif
+
 void Manager::OnRemoteChange(const std::string& msg_str) {
   if (is_shutdown_.load()) {
     ADEBUG << "the manager has been shut down.";
     return;
   }
 
+  std::string s_tmp = msg_str;
+  // reverse message content on arm
+#ifdef __aarch64__
+  std::size_t pos = s_tmp.find(mid_str);
+  while (pos != std::string::npos) {
+    s_tmp.replace(pos, mid_str.size(), 1, raw_c);
+    pos = s_tmp.find(mid_str);
+  }
+#endif
   ChangeMsg msg;
-  RETURN_IF(!message::ParseFromString(msg_str, &msg));
+  RETURN_IF(!message::ParseFromString(s_tmp, &msg));
   if (IsFromSameProcess(msg)) {
     return;
   }
@@ -219,6 +218,15 @@ bool Manager::Publish(const ChangeMsg& msg) {
 
   apollo::cyber::transport::UnderlayMessage m;
   RETURN_VAL_IF(!message::SerializeToString(msg, &m.data()), false);
+  // message content converts on arm
+#ifdef __aarch64__
+  std::string& s_tmp = m.data();
+  std::size_t pos = s_tmp.find(raw_c);
+  while (pos != std::string::npos) {
+    s_tmp.replace(pos, 1, mid_str);
+    pos = s_tmp.find(raw_c);
+  }
+#endif
   if (publisher_ != nullptr) {
     return publisher_->write(reinterpret_cast<void*>(&m));
   }
